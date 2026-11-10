@@ -1,0 +1,894 @@
+
+
+@import url('https://fonts.googleapis.com/css2?family=Orbitron:wght@500;700;900&family=Outfit:wght@300;400;600;800&family=JetBrains+Mono:wght@500;700&display=swap');
+
+/* ---------- 01 · VARIABLES DE COLOR ---------- */
+:root {
+  /* Colores base */
+  --fondo:        #05050a;
+  --fondo-2:      #0a0a12;
+  --texto:        #f0f0f5;
+  --texto-tenue:  #9ca3af;
+  
+  /* Colores RTX y Neones */
+  --nvidia:       #76b900; 
+  --nvidia-brillo:#9eff00;
+  --rtx-gris:     #2d2d35;
+  --rtx-metal:    #4a4a55;
+  --primario:     #7c5cff; 
+  --acento:       #00f0ff; 
+  --peligro:      #ff2a5f;
+  --exito:        #00ff88;
+  
+  /* Glassmorphism */
+  --glass-bg:     rgba(15, 15, 25, 0.65);
+  --glass-borde:  rgba(255, 255, 255, 0.1);
+  --glass-blur:   blur(16px) saturate(150%);
+  
+  --radio:        16px;
+  --trans-pop:    cubic-bezier(0.34, 1.56, 0.64, 1);
+  --trans-suave:  cubic-bezier(0.2, 0.8, 0.2, 1);
+  
+  --font-display: 'Orbitron', sans-serif;
+  --font-body:    'Outfit', sans-serif;
+  --font-mono:    'JetBrains Mono', monospace;
+}
+
+/* ---------- 02 · RESET Y BASE ---------- */
+* { box-sizing: border-box; margin: 0; padding: 0; }
+html { scroll-behavior: smooth; }
+
+body {
+  font-family: var(--font-body);
+  color: var(--texto);
+  min-height: 100vh;
+  overflow-x: hidden;
+  background-color: var(--fondo);
+  -webkit-font-smoothing: antialiased;
+  touch-action: manipulation; 
+}
+
+/* 👇 BLOQUEO DE SCROLL CUANDO EL MENÚ MÓVIL ESTÁ ABIERTO 👇 */
+body.menu-abierto {
+  overflow: hidden;
+}
+
+/* ---------- 03 · FONDO GIF ANIMADO ---------- */
+body::before {
+  content: "";
+  position: fixed;
+  top: -5%; left: -5%;
+  width: 110vw; height: 110vh;
+  background-image: url('https://media3.giphy.com/media/v1.Y2lkPTc5MGI3NjExNGpta2ZvdXZoeGp1dms2dGExa21zd3F4OWtud3p4OGJsbGNkZWlzbiZlcD12MV9pbnRlcm5hbF9naWZfYnlfaWQmY3Q9Zw/keutdYY0X0fMlreu3S/giphy.gif'); 
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+  filter: blur(6px) brightness(0.6) contrast(1.2) saturate(1.4);
+  z-index: -2;
+  animation: fondo-rtx-anim 25s ease-in-out infinite alternate;
+  will-change: transform;
+}
+
+body::after {
+  content: "";
+  position: fixed;
+  inset: 0;
+  background: 
+    radial-gradient(circle at 15% 15%, rgba(118, 185, 0, 0.12) 0%, transparent 40%),
+    radial-gradient(circle at 85% 85%, rgba(124, 92, 255, 0.12) 0%, transparent 40%),
+    linear-gradient(135deg, rgba(5, 5, 10, 0.55) 0%, rgba(10, 10, 18, 0.35) 100%);
+  z-index: -1;
+}
+
+/* ---------- 04 · ANIMACIONES ---------- */
+@keyframes fondo-rtx-anim {
+  0%   { transform: scale(1) translate(0, 0); }
+  50%  { transform: scale(1.08) translate(-2%, 2%); }
+  100% { transform: scale(1.05) translate(2%, -1%); }
+}
+
+@keyframes flotar {
+  0%, 100% { transform: translateY(0) rotate(0deg); }
+  50%      { transform: translateY(-12px) rotate(1deg); }
+}
+
+@keyframes brillo-letra {
+  0%, 100% { text-shadow: 0 0 10px var(--nvidia), 0 0 20px var(--nvidia); }
+  50%      { text-shadow: 0 0 15px var(--nvidia-brillo), 0 0 35px var(--nvidia); }
+}
+
+@keyframes pulso-neon {
+  0%, 100% { box-shadow: 0 0 10px var(--nvidia), inset 0 0 10px var(--nvidia); }
+  50%      { box-shadow: 0 0 25px var(--nvidia-brillo), inset 0 0 20px var(--nvidia); }
+}
+
+@keyframes entrar-panel {
+  from { opacity: 0; transform: translateY(30px) scale(0.98); }
+  to   { opacity: 1; transform: translateY(0) scale(1); }
+}
+
+@keyframes laser-scan {
+  0%   { top: 0%; opacity: 0; }
+  10%  { opacity: 1; }
+  90%  { opacity: 1; }
+  100% { top: 100%; opacity: 0; }
+}
+
+@keyframes brillo-texto-bg {
+  0%, 100% { background-position: 0% 50%; }
+  50%      { background-position: 100% 50%; }
+}
+
+@keyframes slide-up-links {
+  from { opacity: 0; transform: translateY(40px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+
+/* ---------- 05 · TIPOGRAFÍA ---------- */
+h1, h2, h3, h4 {
+  font-family: var(--font-body);
+  line-height: 1.15;
+  text-transform: uppercase;
+}
+
+h1 {
+  font-family: var(--font-display);
+  font-weight: 900;
+  font-size: clamp(1.8rem, 5vw, 3.5rem);
+  letter-spacing: 0.05em;
+  background: linear-gradient(120deg, #fff, var(--nvidia-brillo), var(--acento), #fff);
+  background-size: 300% 100%;
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+  text-shadow: 0 10px 30px rgba(118, 185, 0, 0.3);
+  animation: brillo-texto-bg 8s ease infinite;
+}
+
+h2 {
+  font-family: var(--font-display);
+  font-weight: 700;
+  font-size: 1.6rem;
+  color: #fff;
+  text-shadow: 0 0 15px rgba(118, 185, 0, 0.6);
+  display: inline-block;
+  margin-bottom: 1.5rem;
+  letter-spacing: 0.1em;
+  border-bottom: 3px solid var(--nvidia);
+  padding-bottom: 5px;
+}
+
+h3 { font-size: 1.2rem; color: var(--nvidia-brillo); font-weight: 800; letter-spacing: 0.05em; }
+h4 { font-size: 1rem; color: var(--acento); }
+
+.etiqueta {
+  display: inline-block;
+  font-family: var(--font-mono);
+  font-size: 0.75rem;
+  font-weight: 700;
+  color: var(--nvidia);
+  background: rgba(118, 185, 0, 0.1);
+  border: 1px solid rgba(118, 185, 0, 0.3);
+  padding: 0.4rem 1rem;
+  border-radius: 4px;
+  text-transform: uppercase;
+  letter-spacing: 0.2em;
+  margin-bottom: 1rem;
+  animation: pulso-neon 3s infinite;
+}
+
+/* ---------- 06 · LAYOUT Y CONTENEDORES ---------- */
+.contenedor { width: min(1250px, 92%); margin-inline: auto; }
+section { padding: 3rem 0; }
+.pagina { padding: 3rem 0; min-height: 80vh; animation: entrar-panel 0.7s var(--trans-pop) both; }
+
+/* ---------- 07 · HEADER Y NAVEGACIÓN (PC) ---------- */
+header {
+  position: sticky;
+  top: 0;
+  z-index: 100;
+  background: rgba(5, 5, 10, 0.75);
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+  border-bottom: 1px solid var(--glass-borde);
+  box-shadow: 0 10px 30px rgba(0,0,0,0.5);
+}
+
+.barra {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 1rem 0;
+  gap: 1rem;
+}
+
+.logo {
+  font-family: var(--font-display);
+  font-size: 1.4rem;
+  font-weight: 900;
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
+  color: #fff;
+  transition: transform 0.4s var(--trans-pop);
+}
+
+.logo:hover { transform: scale(1.05) rotate(-1deg); }
+
+.logo span {
+  color: var(--nvidia);
+  text-shadow: 0 0 15px var(--nvidia), 0 0 30px var(--nvidia);
+  animation: brillo-letra 3s infinite;
+}
+
+nav {
+  display: flex;
+  gap: 0.5rem;
+  align-items: center;
+}
+
+nav a {
+  font-family: var(--font-mono);
+  font-size: 0.85rem;
+  font-weight: 700;
+  color: var(--texto-tenue);
+  padding: 0.5rem 0.8rem;
+  border-radius: 8px;
+  transition: all 0.3s;
+  position: relative;
+  overflow: hidden;
+}
+
+nav a:hover, nav a.activo {
+  color: #fff;
+  background: rgba(255, 255, 255, 0.05);
+  box-shadow: inset 0 0 20px rgba(118, 185, 0, 0.2);
+}
+
+nav a::after {
+  content: "";
+  position: absolute;
+  bottom: 0; left: 50%;
+  width: 0; height: 2px;
+  background: var(--nvidia);
+  box-shadow: 0 0 10px var(--nvidia);
+  transition: all 0.3s var(--trans-suave);
+  transform: translateX(-50%);
+}
+
+nav a:hover::after { width: 80%; }
+
+.enlace-carrito {
+  border: 1px solid var(--nvidia);
+  color: var(--nvidia) !important;
+  background: rgba(118, 185, 0, 0.05);
+}
+
+.enlace-carrito span {
+  background: var(--nvidia);
+  color: #000;
+  border-radius: 50%;
+  padding: 0.1rem 0.4rem;
+  font-weight: 900;
+  box-shadow: 0 0 10px var(--nvidia);
+}
+
+/* Oculto en PC, visible en móvil */
+.menu-toggle {
+  display: none;
+  background: transparent;
+  color: var(--nvidia);
+  border: 1px solid var(--nvidia);
+  padding: 0.6rem;
+  border-radius: 8px;
+  font-size: 1.2rem;
+  cursor: pointer;
+  min-width: 44px;
+  min-height: 44px;
+  z-index: 10001; /* Por encima del menú */
+  position: relative;
+}
+
+/* ---------- 08 · PORTADA (HERO) ---------- */
+.portada {
+  text-align: center;
+  padding: 6rem 1rem;
+  position: relative;
+  animation: entrar-panel 0.8s var(--trans-pop) both;
+}
+
+.portada h1 { margin-bottom: 1.5rem; }
+
+.portada p:not(.etiqueta) {
+  max-width: 700px;
+  margin: 0 auto 2.5rem;
+  font-size: 1.1rem;
+  color: #ccc;
+  line-height: 1.7;
+  text-shadow: 0 2px 10px #000;
+}
+
+/* ---------- 09 · BOTONES ---------- */
+.boton {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0.9rem 2rem;
+  font-family: var(--font-display);
+  font-size: 0.9rem;
+  font-weight: 700;
+  letter-spacing: 0.05em;
+  color: #000;
+  background: var(--nvidia);
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  position: relative;
+  overflow: hidden;
+  text-transform: uppercase;
+  transition: all 0.3s var(--trans-pop);
+  box-shadow: 0 0 15px rgba(118, 185, 0, 0.4);
+  clip-path: polygon(10px 0, 100% 0, 100% calc(100% - 10px), calc(100% - 10px) 100%, 0 100%, 0 10px);
+  min-height: 48px;
+}
+
+.boton::before {
+  content: "";
+  position: absolute;
+  top: 0; left: -100%;
+  width: 50%; height: 100%;
+  background: linear-gradient(90deg, transparent, rgba(255,255,255,0.6), transparent);
+  transform: skewX(-20deg);
+  transition: left 0.5s;
+}
+
+.boton:hover, .boton:active {
+  transform: translateY(-3px) scale(1.02);
+  box-shadow: 0 10px 25px rgba(118, 185, 0, 0.6), 0 0 30px rgba(158, 255, 0, 0.4);
+  background: var(--nvidia-brillo);
+}
+.boton:hover::before { left: 150%; }
+
+.boton.secundario {
+  background: transparent;
+  color: var(--acento);
+  border: 1px solid var(--acento);
+  box-shadow: inset 0 0 10px rgba(0, 240, 255, 0.2);
+}
+.boton.secundario:hover, .boton.secundario:active {
+  background: rgba(0, 240, 255, 0.1);
+  box-shadow: 0 0 20px rgba(0, 240, 255, 0.5);
+}
+
+.boton.peligro {
+  background: transparent;
+  color: var(--peligro);
+  border: 1px solid var(--peligro);
+}
+.boton.peligro:hover, .boton.peligro:active { background: rgba(255, 42, 95, 0.15); box-shadow: 0 0 20px rgba(255, 42, 95, 0.5); }
+
+.boton-peligro {
+  background: rgba(255, 42, 95, 0.1);
+  color: var(--peligro);
+  border: 1px solid var(--peligro);
+  padding: 0.5rem 1rem;
+  border-radius: 6px;
+  cursor: pointer;
+  font-family: var(--font-body);
+  font-weight: 600;
+  transition: all 0.2s;
+  min-height: 44px;
+}
+.boton-peligro:hover, .boton-peligro:active { background: var(--peligro); color: #fff; }
+
+/* ---------- 10 · TARJETAS GLASSMORPHISM ---------- */
+.rejilla {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+  gap: 2rem;
+}
+
+.tarjeta {
+  background: var(--glass-bg);
+  backdrop-filter: var(--glass-blur);
+  -webkit-backdrop-filter: var(--glass-blur);
+  border: 1px solid var(--glass-borde);
+  border-radius: var(--radio);
+  position: relative;
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+  transition: all 0.5s var(--trans-pop);
+  animation: entrar-panel 0.6s var(--trans-pop) both;
+  box-shadow: 0 10px 30px rgba(0,0,0,0.6);
+}
+
+.tarjeta::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  border-radius: var(--radio);
+  padding: 2px;
+  background: linear-gradient(135deg, transparent 40%, var(--nvidia), var(--acento), transparent 60%);
+  background-size: 200% 200%;
+  -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+  -webkit-mask-composite: xor;
+  mask-composite: exclude;
+  opacity: 0;
+  transition: opacity 0.4s;
+  animation: fondo-rtx-anim 3s linear infinite;
+}
+
+.tarjeta:hover, .tarjeta:active {
+  transform: translateY(-10px) scale(1.02);
+  box-shadow: 0 25px 50px rgba(0,0,0,0.8), 0 0 30px rgba(118, 185, 0, 0.3);
+  border-color: transparent;
+}
+.tarjeta:hover::before, .tarjeta:active::before { opacity: 1; }
+
+.tarjeta img {
+  width: 100%;
+  height: 260px;
+  object-fit: contain;
+  padding: 1.5rem;
+  transition: all 0.6s var(--trans-pop);
+  filter: drop-shadow(0 10px 20px rgba(0,0,0,0.8));
+  animation: flotar 6s ease-in-out infinite;
+  position: relative;
+  z-index: 1;
+}
+
+.tarjeta:hover img, .tarjeta:active img {
+  transform: scale(1.6) translateY(-10px) rotate(3deg);
+  filter: drop-shadow(0 0 25px var(--nvidia)) drop-shadow(0 0 50px var(--acento));
+  animation-play-state: paused;
+  z-index: 10;
+}
+
+.tarjeta .info {
+  padding: 1.5rem;
+  background: linear-gradient(to top, rgba(0,0,0,0.9), transparent);
+  border-top: 1px solid rgba(255,255,255,0.05);
+  position: relative;
+  z-index: 2;
+  display: flex;
+  flex-direction: column;
+  flex-grow: 1;
+}
+
+.tarjeta h3 { font-size: 1.2rem; margin-bottom: 0.5rem; }
+.tarjeta p { color: #aaa; font-size: 0.9rem; margin-bottom: 1rem; }
+
+.precio {
+  font-family: var(--font-display);
+  font-size: 1.4rem;
+  font-weight: 900;
+  color: var(--nvidia-brillo);
+  text-shadow: 0 0 15px rgba(158, 255, 0, 0.4);
+  margin-bottom: 0.5rem;
+}
+
+.stock {
+  font-family: var(--font-mono);
+  font-size: 0.75rem;
+  color: var(--acento);
+  margin-bottom: 1rem;
+}
+
+.tarjeta .boton { width: 100%; margin-top: auto; }
+
+/* ---------- 11 · CATEGORÍAS Y HERRAMIENTAS ---------- */
+.categorias { grid-template-columns: repeat(auto-fit, minmax(150px, 1fr)); }
+.categoria { text-align: center; padding: 1.5rem 1rem; cursor: pointer; }
+.categoria span {
+  font-size: 2.5rem;
+  display: block;
+  margin-bottom: 1rem;
+  transition: transform 0.4s var(--trans-pop);
+}
+.categoria:hover span, .categoria:active span { transform: scale(1.2) translateY(-5px); filter: drop-shadow(0 0 20px var(--nvidia)); }
+
+.herramientas {
+  display: flex;
+  gap: 1rem;
+  margin: 2rem 0;
+  flex-wrap: wrap;
+}
+.herramientas input, .herramientas select { flex: 1; min-width: 200px; }
+
+/* ---------- 12 · FORMULARIOS E INPUTS ---------- */
+form { display: grid; gap: 1.5rem; }
+.formulario label {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+  font-family: var(--font-mono);
+  font-size: 0.85rem;
+  color: var(--nvidia);
+}
+
+input, textarea, select {
+  width: 100%;
+  padding: 1rem;
+  font-family: var(--font-body);
+  font-size: 16px;
+  color: #fff;
+  background: rgba(0, 0, 0, 0.6);
+  border: 1px solid var(--rtx-metal);
+  border-radius: 8px;
+  transition: all 0.3s;
+  box-shadow: inset 0 2px 5px rgba(0,0,0,0.5);
+  min-height: 48px;
+}
+
+input:focus, textarea:focus, select:focus {
+  outline: none;
+  border-color: var(--nvidia);
+  background: rgba(0, 0, 0, 0.9);
+  box-shadow: 0 0 15px rgba(118, 185, 0, 0.3), inset 0 2px 5px rgba(0,0,0,0.5);
+}
+
+input.campo-ok { border-color: var(--exito); box-shadow: 0 0 15px rgba(0, 255, 136, 0.3); }
+input.campo-error { border-color: var(--peligro); box-shadow: 0 0 15px rgba(255, 42, 95, 0.3); }
+
+.fila { display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; }
+.mensaje { color: var(--acento); font-family: var(--font-mono); font-size: 0.9rem; }
+.nota { color: #777; font-size: 0.85rem; }
+
+/* ---------- 13 · PANELES Y COMENTARIOS ---------- */
+.panel {
+  background: var(--glass-bg);
+  backdrop-filter: var(--glass-blur);
+  -webkit-backdrop-filter: var(--glass-blur);
+  border: 1px solid var(--glass-borde);
+  border-radius: var(--radio);
+  padding: 1.5rem;
+  margin-bottom: 2rem;
+  animation: entrar-panel 0.6s var(--trans-pop) both;
+}
+
+.lista { display: grid; gap: 1rem; margin-top: 2rem; }
+.comentario {
+  background: rgba(255, 255, 255, 0.03);
+  border-left: 4px solid var(--nvidia);
+  padding: 1.2rem;
+  border-radius: 0 8px 8px 0;
+  transition: transform 0.3s, background 0.3s;
+}
+.comentario:hover, .comentario:active { transform: translateX(5px); background: rgba(255, 255, 255, 0.06); }
+.comentario h4 { color: #fff; margin-bottom: 0.5rem; font-family: var(--font-body); }
+
+/* ---------- 14 · CARRITO ---------- */
+.fila-carrito {
+  display: grid;
+  grid-template-columns: 2fr auto auto auto;
+  align-items: center;
+  gap: 1.5rem;
+  background: var(--glass-bg);
+  border: 1px solid var(--glass-borde);
+  padding: 1.2rem;
+  border-radius: var(--radio);
+  transition: all 0.3s;
+  margin-bottom: 1rem;
+}
+.fila-carrito:hover { border-color: var(--nvidia); box-shadow: 0 10px 20px rgba(0,0,0,0.5); }
+
+.control-cantidad {
+  display: flex;
+  align-items: center;
+  gap: 0.8rem;
+  background: rgba(0,0,0,0.5);
+  padding: 0.3rem;
+  border-radius: 8px;
+  border: 1px solid var(--rtx-metal);
+}
+.control-cantidad button {
+  width: 36px; height: 36px;
+  background: transparent;
+  color: #fff;
+  border: none;
+  font-size: 1.2rem;
+  cursor: pointer;
+  border-radius: 4px;
+  transition: background 0.2s, color 0.2s;
+}
+.control-cantidad button:hover, .control-cantidad button:active { background: var(--nvidia); color: #000; }
+.control-cantidad span { font-family: var(--font-mono); font-weight: 700; font-size: 1.1rem; }
+
+.total-carrito {
+  text-align: right;
+  font-family: var(--font-display);
+  font-size: 1.8rem;
+  color: var(--nvidia-brillo);
+  text-shadow: 0 0 20px rgba(158,255,0,0.5);
+  margin-top: 2rem;
+  border-top: 1px dashed var(--rtx-metal);
+  padding-top: 1rem;
+}
+
+/* ---------- 15 · QR PASARELA ---------- */
+.pestanas { display: flex; gap: 1rem; margin-bottom: 2rem; flex-wrap: wrap; }
+.pestanas .boton { opacity: 0.5; filter: grayscale(1); flex: 1; text-align: center; }
+.pestanas .boton.activa { opacity: 1; filter: grayscale(0); }
+
+.qr-pasarela {
+  background: linear-gradient(180deg, #111 0%, #000 100%);
+  border: 1px solid #333;
+  border-radius: 20px;
+  padding: 2rem 1.5rem;
+  max-width: 450px;
+  margin: 0 auto;
+  box-shadow: 0 30px 60px rgba(0,0,0,0.8), 0 0 100px rgba(118, 185, 0, 0.1);
+  position: relative;
+  overflow: hidden;
+}
+
+.qr-head { display: flex; justify-content: space-between; margin-bottom: 2rem; align-items: center; gap: 1rem;}
+.qr-brand { font-family: var(--font-display); font-weight: 900; font-size: 1.1rem; }
+.qr-brand span { color: var(--nvidia); }
+.qr-brand em { color: var(--acento); font-style: normal; font-size: 0.8em; }
+
+.qr-badge {
+  background: rgba(118, 185, 0, 0.2);
+  color: var(--nvidia-brillo);
+  border: 1px solid var(--nvidia);
+  padding: 0.2rem 0.6rem;
+  border-radius: 50px;
+  font-size: 0.7rem;
+  font-weight: 800;
+  text-transform: uppercase;
+  animation: pulso-neon 2s infinite;
+  white-space: nowrap;
+}
+
+.qr-amount-box { text-align: center; margin-bottom: 2rem; }
+.qr-label { color: #666; font-size: 0.8rem; text-transform: uppercase; letter-spacing: 0.1em; }
+.qr-amount { font-family: var(--font-display); font-size: 2.2rem; color: #fff; display: block; }
+
+.qr-scanner {
+  width: 100%;
+  max-width: 280px;
+  aspect-ratio: 1 / 1;
+  margin: 0 auto;
+  background: #fff;
+  border-radius: 12px;
+  position: relative;
+  padding: 10px;
+  box-shadow: 0 0 0 4px rgba(118, 185, 0, 0.2);
+  overflow: hidden;
+}
+
+.qr-scanner::after {
+  content: "";
+  position: absolute;
+  top: 0; left: 0; right: 0;
+  height: 4px;
+  background: var(--nvidia);
+  box-shadow: 0 0 15px 5px var(--nvidia);
+  animation: laser-scan 3s ease-in-out infinite;
+  z-index: 10;
+}
+
+.qr-canvas { width: 100%; height: 100%; display: flex; align-items: center; justify-content: center; }
+.qr-canvas img, .qr-canvas canvas { max-width: 100%; height: auto; }
+
+.qr-logo {
+  position: absolute;
+  top: 50%; left: 50%;
+  transform: translate(-50%, -50%);
+  width: 50px; height: 50px;
+  background: #000;
+  border: 2px solid var(--nvidia);
+  color: var(--nvidia);
+  border-radius: 12px;
+  display: flex; align-items: center; justify-content: center;
+  font-family: var(--font-display); font-size: 1.5rem; font-weight: 900;
+  box-shadow: 0 0 20px var(--nvidia);
+  z-index: 11;
+}
+
+.qr-progress { width: 100%; height: 6px; background: #222; border-radius: 10px; margin: 2rem 0 1rem; overflow: hidden; }
+.qr-progress-bar { height: 100%; width: 100%; background: var(--nvidia); transition: width 1s linear; box-shadow: 0 0 10px var(--nvidia); }
+.qr-progress-low { background: var(--peligro); box-shadow: 0 0 10px var(--peligro); }
+
+.qr-info { display: flex; justify-content: space-between; align-items: center; margin-bottom: 1rem; }
+.qr-timer { font-family: var(--font-mono); color: var(--acento); font-size: 0.9rem; }
+.qr-timer.qr-por-vencer { color: var(--peligro); animation: pulso-neon 1s infinite; }
+
+.qr-refresh {
+  background: transparent; border: none; color: #fff; font-size: 1.5rem; cursor: pointer;
+  transition: transform 0.4s;
+  min-width: 44px; min-height: 44px;
+}
+.qr-refresh:hover, .qr-refresh:active { transform: rotate(180deg); color: var(--nvidia); }
+
+.qr-token {
+  background: #000; border: 1px solid #333; padding: 0.8rem; border-radius: 8px;
+  display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 0.5rem;
+  font-family: var(--font-mono); font-size: 0.75rem; color: #555; margin-top: 1.5rem;
+}
+.qr-token code { color: var(--nvidia); word-break: break-all; }
+
+/* ---------- 16 · RECIBO ---------- */
+.recibo {
+  background: #fff; color: #000; padding: 2rem 1.5rem; border-radius: 12px;
+  max-width: 700px; margin-top: 2rem; border-top: 8px solid var(--nvidia);
+  box-shadow: 0 20px 50px rgba(0,0,0,0.6);
+}
+.recibo h2 { color: #000 !important; text-shadow: none !important; border-color: #000; font-size: 1.4rem; }
+.recibo p, .recibo li { color: #333; font-family: var(--font-mono); font-size: 0.85rem; margin-bottom: 0.5rem; }
+.recibo-estado {
+  background: var(--exito); color: #000; padding: 0.5rem 1rem; border-radius: 4px;
+  font-weight: 900; display: inline-block; margin: 1rem 0; letter-spacing: 0.1em;
+}
+
+/* ---------- 17 · ADMIN Y TABS ---------- */
+.admin-tabs {
+  display: flex; gap: 0.5rem; margin-bottom: 2rem; border-bottom: 1px solid #333; padding-bottom: 1rem; flex-wrap: wrap;
+}
+.admin-tab {
+  background: transparent; border: 1px solid #333; color: #888; padding: 0.6rem 1.2rem;
+  border-radius: 8px; cursor: pointer; font-family: var(--font-mono); transition: all 0.3s;
+  flex: 1 1 auto; text-align: center;
+}
+.admin-tab:hover { color: #fff; border-color: var(--acento); }
+.admin-tab.activa {
+  background: var(--nvidia); color: #000; border-color: var(--nvidia);
+  font-weight: 800; box-shadow: 0 0 15px rgba(118, 185, 0, 0.4);
+}
+
+.admin-fila {
+  display: flex; align-items: center; gap: 1rem; background: rgba(255,255,255,0.02);
+  padding: 1rem; border-radius: 12px; border: 1px solid #222; margin-bottom: 1rem;
+  transition: border-color 0.3s;
+}
+.admin-fila:hover { border-color: var(--nvidia); background: rgba(255,255,255,0.05); }
+.admin-img { width: 60px; height: 60px; object-fit: contain; background: #fff; border-radius: 8px; padding: 5px; flex-shrink: 0; }
+
+/* ---------- 18 · FOOTER ---------- */
+footer {
+  text-align: center; padding: 2rem 1rem; border-top: 1px solid #222;
+  background: rgba(0,0,0,0.8); margin-top: 4rem; font-family: var(--font-mono); font-size: 0.85rem; color: #666;
+}
+footer p:first-child { color: var(--nvidia); margin-bottom: 0.5rem; font-weight: 700; }
+
+/* ============================================================
+   OPTIMIZACIÓN MÓVIL EXTREMA (ANDROID / IOS)
+   ============================================================ */
+
+@media (max-width: 850px) {
+  
+  /* 1. LA "X" SE FIJA ARRIBA A LA DERECHA */
+  .menu-toggle { 
+    display: flex; 
+    align-items: center; 
+    justify-content: center; 
+    position: fixed; /* Fijado a la pantalla, no se mueve */
+    top: 15px; 
+    right: 15px;
+    z-index: 10001; 
+    background: #070610; /* Fondo sólido para que resalte */
+    border-color: var(--nvidia);
+    color: var(--nvidia);
+  }
+  
+  /* 2. MENÚ FULL-SCREEN CON SCROLL (Para que el carrito no se pierda) */
+  nav {
+    position: fixed;
+    top: 0; left: 0;
+    width: 100vw;
+    height: 100vh;
+    background: #070610; /* Fondo 100% opaco */
+    flex-direction: column;
+    
+    justify-content: flex-start; /* Empieza desde arriba */
+    padding: 80px 1rem 2rem 1rem; /* Espacio para la "X" y margen inferior */
+    overflow-y: auto; /* Si hay muchos botones, se puede hacer scroll */
+    gap: 1rem;
+    
+    z-index: 10000;
+    opacity: 0;
+    visibility: hidden;
+    transition: all 0.4s cubic-bezier(0.2, 0.8, 0.2, 1);
+  }
+  
+  nav.mostrar {
+    opacity: 1;
+    visibility: visible;
+  }
+  
+  /* 3. BOTONES DEL MENÚ */
+  nav a {
+    font-size: 1.2rem;
+    width: 100%;
+    max-width: 300px; /* No se estiran de más */
+    text-align: center;
+    padding: 1rem;
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    border-radius: 12px;
+    background: rgba(255, 255, 255, 0.03);
+    margin: 0 auto; /* Centrados horizontalmente */
+    flex-shrink: 0; /* Evita que se aplasten */
+    
+    opacity: 0;
+    transform: translateY(30px);
+    animation: slide-up-links 0.4s forwards;
+  }
+  
+  /* Animación escalonada */
+  nav a:nth-child(1) { animation-delay: 0.1s; }
+  nav a:nth-child(2) { animation-delay: 0.15s; }
+  nav a:nth-child(3) { animation-delay: 0.2s; }
+  nav a:nth-child(4) { animation-delay: 0.25s; }
+  nav a:nth-child(5) { animation-delay: 0.3s; }
+  nav a:nth-child(6) { animation-delay: 0.35s; }
+  nav a:nth-child(7) { animation-delay: 0.4s; }
+  nav a:nth-child(8) { animation-delay: 0.45s; }
+  nav a:nth-child(9) { animation-delay: 0.5s; }
+  nav a:nth-child(10) { animation-delay: 0.55s; }
+  nav a:nth-child(11) { animation-delay: 0.6s; }
+
+  /* El carrito resalta en verde */
+  nav a.enlace-carrito {
+    background: rgba(118, 185, 0, 0.15);
+    border-color: var(--nvidia);
+    color: #fff !important;
+    margin-top: 1rem;
+    margin-bottom: 2rem; /* Espacio extra al final */
+  }
+  
+  nav a::after { display: none; }
+  
+  /* Adaptaciones de contenido */
+  .herramientas { flex-direction: column; }
+  .herramientas input, .herramientas select { width: 100%; min-width: unset; }
+  
+  .fila-carrito { 
+    grid-template-columns: 1fr; 
+    gap: 1rem; 
+    text-align: center; 
+    padding: 1.5rem 1rem;
+  }
+  .fila-carrito > div:first-child { margin-bottom: 0.5rem; }
+  .control-cantidad { justify-content: center; margin: 0 auto; }
+  
+  .fila { grid-template-columns: 1fr; }
+  
+  .admin-fila { flex-direction: column; text-align: center; gap: 0.8rem; }
+  .admin-fila > button { width: 100%; }
+  
+  .pestanas { flex-direction: column; }
+  .pestanas .boton { width: 100%; }
+}
+
+@media (max-width: 520px) {
+  .portada { padding: 4rem 1rem; }
+  .portada h1 { font-size: 1.8rem; }
+  .portada p { font-size: 1rem; }
+  
+  .logo { font-size: 1.1rem; } 
+  
+  .rejilla { grid-template-columns: 1fr; }
+  
+  .tarjeta:hover img, .tarjeta:active img { transform: scale(1.2) translateY(-5px); }
+  
+  .panel { padding: 1.2rem; }
+  
+  .acciones-carrito { flex-direction: column; align-items: stretch; gap: 1rem; }
+  .acciones-carrito .boton { width: 100%; }
+  
+  .total-carrito { font-size: 1.5rem; text-align: center; }
+  
+  .qr-amount { font-size: 1.8rem; }
+  .qr-head { flex-direction: column; text-align: center; gap: 0.5rem; }
+  
+  .recibo { padding: 1.5rem 1rem; }
+  
+  nav a { font-size: 1.1rem; min-width: 200px; padding: 0.8rem 1rem; }
+}
+
+/* ---------- 20 · ACCESIBILIDAD ---------- */
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after {
+    animation-duration: 0.01ms !important; animation-iteration-count: 1 !important; transition-duration: 0.01ms !important;
+  }
+}

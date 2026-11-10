@@ -1,0 +1,206 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="TecnoTienda, tienda demostrativa de tecnología">
+  <title>Administración | TecnoTienda</title>
+  <link rel="stylesheet" href="css/estilos.css">
+</head>
+<body>
+  <header>
+    <div class="contenedor barra">
+      <a class="logo" href="index.html">Tecno<span>Tienda</span></a>
+      <button class="menu-toggle" id="menu-toggle" aria-label="Abrir menú" aria-expanded="false">☰</button>
+      <nav id="menu-principal">
+        <a href="index.html">Inicio</a>
+        <a href="computadoras.html">Computadoras</a>
+        <a href="laptops.html">Laptops</a>
+        <a href="pc-armados.html">PC armados</a>
+        <a href="gpu.html">GPU</a>
+        <a href="cpu.html">CPU</a>
+        <a href="comentarios.html">Comentarios</a>
+        <a href="registro.html">Registro</a>
+        <a href="contacto.html">Contacto</a>
+        <a href="admin.html" class="activo">Admin</a>
+        <a href="carrito.html" class="enlace-carrito">🛒 Carrito <span id="contador-carrito">0</span></a>
+      </nav>
+    </div>
+  </header>
+
+  <main>
+    <section class="contenedor pagina">
+      <p class="etiqueta">ADMINISTRACIÓN</p>
+      <h1>Panel de administración</h1>
+
+      <div id="admin-login" class="panel">
+        <h2>Acceso restringido</h2>
+        <form id="form-admin-login" class="formulario">
+          <label>Contraseña
+            <input id="admin-pass" type="password" required autocomplete="current-password">
+          </label>
+          <button class="boton" type="submit">Entrar</button>
+        </form>
+        <p id="admin-login-msg" class="mensaje" role="status"></p>
+      </div>
+
+      <div id="admin-panel" hidden>
+        <div class="acciones-carrito">
+          <button id="admin-salir" class="boton secundario" type="button">Cerrar sesión</button>
+          <button id="admin-recargar" class="boton secundario" type="button">Recargar datos</button>
+          <button id="admin-exportar" class="boton" type="button">Exportar todo (JSON)</button>
+        </div>
+
+        <div class="admin-tabs" role="tablist">
+          <button class="admin-tab activa" data-tab="dashboard" role="tab" aria-selected="true">Dashboard</button>
+          <button class="admin-tab" data-tab="pedidos" role="tab" aria-selected="false">Pedidos</button>
+          <button class="admin-tab" data-tab="comentarios" role="tab" aria-selected="false">Comentarios</button>
+          <button class="admin-tab" data-tab="inventario" role="tab" aria-selected="false">Inventario</button>
+          <button class="admin-tab" data-tab="mensajes" role="tab" aria-selected="false">Mensajes</button>
+          <button class="admin-tab" data-tab="cliente" role="tab" aria-selected="false">Cliente</button>
+          <button class="admin-tab" data-tab="config" role="tab" aria-selected="false">Configuración</button>
+        </div>
+
+        <div id="tab-dashboard" class="admin-tabpanel">
+          <div class="rejilla" id="admin-stats"></div>
+          <div class="panel">
+            <h2>Stock bajo (menos de 3 unidades)</h2>
+            <div id="admin-stock-bajo"></div>
+          </div>
+        </div>
+
+        <div id="tab-pedidos" class="admin-tabpanel" hidden>
+          <div class="panel">
+            <h2>Pedidos registrados</h2>
+            <div id="admin-pedidos"></div>
+          </div>
+        </div>
+
+        <div id="tab-comentarios" class="admin-tabpanel" hidden>
+          <div class="panel">
+            <h2>Comentarios publicados</h2>
+            <div class="acciones-carrito">
+              <button id="admin-borrar-comentarios" class="boton peligro" type="button">Borrar todos</button>
+            </div>
+            <div id="admin-comentarios"></div>
+          </div>
+        </div>
+
+        <div id="tab-inventario" class="admin-tabpanel" hidden>
+          <div class="panel">
+            <h2 id="inv-titulo">Añadir producto</h2>
+            <form id="form-producto" class="formulario">
+              <div class="fila">
+                <label>ID único
+                  <input id="prod-id" type="text" required maxlength="40" pattern="[a-z0-9\-]+" placeholder="ej: gpu-rtx-4080">
+                </label>
+                <label>Categoría
+                  <select id="prod-categoria" required>
+                    <option value="computadoras">computadoras</option>
+                    <option value="laptops">laptops</option>
+                    <option value="pc-armados">pc-armados</option>
+                    <option value="gpu">gpu</option>
+                    <option value="cpu">cpu</option>
+                  </select>
+                </label>
+              </div>
+              <label>Nombre
+                <input id="prod-nombre" type="text" required maxlength="80">
+              </label>
+              <label>Descripción
+                <input id="prod-descripcion" type="text" required maxlength="200">
+              </label>
+              <div class="fila">
+                <label>Precio (USD)
+                  <input id="prod-precio" type="number" required min="0" step="0.01">
+                </label>
+                <label>Stock
+                  <input id="prod-stock" type="number" required min="0" step="1">
+                </label>
+              </div>
+              <label>Ruta de imagen
+                <input id="prod-imagen" type="text" required placeholder="img/producto.png">
+              </label>
+              <label>Destacado
+                <input id="prod-destacado" type="checkbox" style="width:auto; justify-self:start;">
+              </label>
+              <div class="acciones-carrito">
+                <button class="boton" type="submit" id="btn-guardar-producto">Añadir producto</button>
+                <button class="boton secundario" type="button" id="btn-cancelar-edicion" hidden>Cancelar edición</button>
+              </div>
+              <p id="prod-mensaje" class="mensaje" role="status"></p>
+            </form>
+          </div>
+          <div class="panel">
+            <div class="acciones-carrito" style="justify-content:space-between; align-items:center;">
+              <h2 style="margin:0;">Inventario (<span id="inv-count">0</span>)</h2>
+              <button id="admin-reset-inventario" class="boton secundario" type="button">Restaurar desde productos.json</button>
+            </div>
+            <div id="admin-inventario" style="margin-top:1rem;"></div>
+          </div>
+        </div>
+
+        <div id="tab-mensajes" class="admin-tabpanel" hidden>
+          <div class="panel">
+            <h2>Mensajes de contacto</h2>
+            <div class="acciones-carrito">
+              <button id="admin-borrar-mensajes" class="boton peligro" type="button">Borrar todos</button>
+            </div>
+            <div id="admin-mensajes"></div>
+          </div>
+        </div>
+
+        <div id="tab-cliente" class="admin-tabpanel" hidden>
+          <div class="panel">
+            <h2>Cliente registrado</h2>
+            <div id="admin-cliente"></div>
+          </div>
+        </div>
+
+        <div id="tab-config" class="admin-tabpanel" hidden>
+          <div class="panel">
+            <h2>Cambiar contraseña</h2>
+            <form id="form-cambiar-pass" class="formulario">
+              <label>Contraseña actual
+                <input id="pass-actual" type="password" required>
+              </label>
+              <label>Nueva contraseña (mín. 4 caracteres)
+                <input id="pass-nueva" type="password" required minlength="4">
+              </label>
+              <button class="boton" type="submit">Cambiar contraseña</button>
+            </form>
+            <p id="pass-mensaje" class="mensaje" role="status"></p>
+          </div>
+          <div class="panel">
+            <h2>Importar datos</h2>
+            <form id="form-importar" class="formulario">
+              <label>Archivo JSON exportado previamente
+                <input id="import-file" type="file" accept=".json" required>
+              </label>
+              <button class="boton" type="submit">Importar datos</button>
+            </form>
+            <p id="import-mensaje" class="mensaje" role="status"></p>
+          </div>
+          <div class="panel">
+            <h2>Zona de peligro</h2>
+            <p class="nota">Estas acciones no se pueden deshacer.</p>
+            <div class="acciones-carrito">
+              <button id="admin-borrar-pedidos" class="boton peligro" type="button">Borrar pedidos</button>
+              <button id="admin-borrar-todo" class="boton peligro" type="button">Borrar TODOS los datos</button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <footer>
+    <p>© 2026 TecnoTienda · Proyecto de estudio</p>
+    <p>Precios demostrativos expresados en USD.</p>
+  </footer>
+
+  <script src="js/utilidades.js"></script>
+  <script src="js/carrito.js"></script>
+  <script src="js\adm.js"></script>
+</body>
+</html>

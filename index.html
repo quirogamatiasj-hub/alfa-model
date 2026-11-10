@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="TecnoTienda, tienda demostrativa de tecnología">
+  <title>Inicio | TecnoTienda</title>
+  <link rel="stylesheet" href="css/estilos.css">
+</head>
+<body>
+  <header>
+    <div class="contenedor barra">
+      <a class="logo" href="index.html">Tecno<span>Tienda</span></a>
+      <button class="menu-toggle" id="menu-toggle" aria-label="Abrir menú" aria-expanded="false">☰</button>
+      <nav id="menu-principal">
+        <a href="index.html">Inicio</a>
+        <a href="computadoras.html">Computadoras</a>
+        <a href="laptops.html">Laptops</a>
+        <a href="pc-armados.html">PC armados</a>
+        <a href="gpu.html">GPU</a>
+        <a href="cpu.html">CPU</a>
+        <a href="comentarios.html">Comentarios</a>
+        <a href="registro.html">Registro</a>
+        <a href="contacto.html">Contacto</a>
+        <a href="adm.html">Admin</a>
+        <a href="carrito.html" class="enlace-carrito">🛒 Carrito <span id="contador-carrito">0</span></a>
+      </nav>
+    </div>
+  </header>
+  <main>
+    <section class="portada">
+      <p class="etiqueta">TECNOLOGÍA PARA TODOS</p>
+      <h1>Todo en tecnología en un solo lugar</h1>
+      <p>Computadoras, laptops, PC armados y componentes para estudiar, trabajar y jugar.</p>
+      <a class="boton" href="pc-armados.html">Explorar productos</a>
+    </section>
+    <section class="contenedor">
+      <p class="etiqueta">CATÁLOGO</p>
+      <h2>Compra por categoría</h2>
+      <div class="rejilla categorias">
+        <a class="tarjeta categoria" href="computadoras.html"><span>🖥️</span><h3>Computadoras</h3><p>Equipos de escritorio</p></a>
+        <a class="tarjeta categoria" href="laptops.html"><span>💻</span><h3>Laptops</h3><p>Portátiles para cada día</p></a>
+        <a class="tarjeta categoria" href="pc-armados.html"><span>🎮</span><h3>PC armados</h3><p>Equipos listos para usar</p></a>
+        <a class="tarjeta categoria" href="gpu.html"><span>🎨</span><h3>Tarjetas gráficas</h3><p>Juegos y diseño</p></a>
+        <a class="tarjeta categoria" href="cpu.html"><span>⚙️</span><h3>Procesadores</h3><p>El cerebro de tu PC</p></a>
+      </div>
+    </section>
+    <section class="contenedor">
+      <p class="etiqueta">SELECCIÓN</p>
+      <h2>Productos destacados</h2>
+      <div id="productos-destacados" class="rejilla"><p>Cargando productos...</p></div>
+    </section>
+  </main>
+  <footer>
+    <p>© 2026 TecnoTienda · Proyecto de estudio</p>
+  </footer>
+  <script src="js/utilidades.js"></script>
+  <script src="js/carrito.js"></script>
+  <script src="js/catalogo.js"></script>
+</body>
+</html>

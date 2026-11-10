@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="TecnoTienda, tienda demostrativa de tecnología">
+  <title>Comentarios | TecnoTienda</title>
+  <link rel="stylesheet" href="css/estilos.css">
+</head>
+<body>
+  <header>
+    <div class="contenedor barra">
+      <a class="logo" href="index.html">Tecno<span>Tienda</span></a>
+      <button class="menu-toggle" id="menu-toggle" aria-label="Abrir menú" aria-expanded="false">☰</button>
+      <nav id="menu-principal">
+        <a href="index.html">Inicio</a>
+        <a href="computadoras.html">Computadoras</a>
+        <a href="laptops.html">Laptops</a>
+        <a href="pc-armados.html">PC armados</a>
+        <a href="gpu.html">GPU</a>
+        <a href="cpu.html">CPU</a>
+        <a href="comentarios.html">Comentarios</a>
+        <a href="registro.html">Registro</a>
+        <a href="contacto.html">Contacto</a>
+        <a href="adm.html">Admin</a>
+        <a href="carrito.html" class="enlace-carrito">🛒 Carrito <span id="contador-carrito">0</span></a>
+      </nav>
+    </div>
+  </header>
+  <main>
+    <section class="contenedor pagina">
+      <p class="etiqueta">OPINIONES</p>
+      <h1>Comentarios de clientes</h1>
+      <form id="form-comentario" class="formulario">
+        <label>Tu nombre<input id="com-nombre" type="text" maxlength="40" required></label>
+        <label>Calificación
+          <select id="com-estrellas">
+            <option value="5">★★★★★ - Excelente</option>
+            <option value="4">★★★★ - Muy bueno</option>
+            <option value="3">★★★ - Bueno</option>
+            <option value="2">★★ - Regular</option>
+            <option value="1">★ - Puede mejorar</option>
+          </select>
+        </label>
+        <label>Comentario<textarea id="com-texto" rows="4" maxlength="500" required></textarea></label>
+        <button class="boton" type="submit">Publicar comentario</button>
+      </form>
+      <p id="comentario-mensaje" class="mensaje" role="status"></p>
+      <div id="lista-comentarios" class="lista"></div>
+    </section>
+  </main>
+  <footer>
+    <p>© 2026 TecnoTienda · Proyecto de estudio</p>
+    <p>Precios demostrativos expresados en USD.</p>
+  </footer>
+  <script src="js/utilidades.js"></script>
+  <script src="js/carrito.js"></script>
+  <script src="js/comentarios.js"></script>
+</body>
+</html>

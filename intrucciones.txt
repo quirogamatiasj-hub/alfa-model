@@ -1,0 +1,26 @@
+
+
+INFORME DEL PROYECTO: TIENDA VIRTUAL (CYBERPUNK RTX EDITION)
+
+1. CONTRASEÑA DEL ADMINISTRADOR Y SU FUNCIONAMIENTO
+- La contraseña por defecto para entrar al panel de administración (adm.html) es: admin123
+- ¿Cómo funciona internamente? Al principio, la contraseña está escrita en el código de JavaScript (adm.js). Cuando ingresas por primera vez, el sistema valida el texto y crea una sesión temporal. 
+- Si cierras el navegador, la sesión se borra y te vuelve a pedir la contraseña. Sin embargo, si entras a la pestaña de "Configuración" dentro del panel, puedes cambiarla. Cuando haces esto, la nueva contraseña se guarda en la memoria del navegador (localStorage), haciendo que "admin123" deje de funcionar y solo sirva la nueva.
+- Nota importante: Es un sistema Frontend (del lado del cliente). En un proyecto real de producción, esto no se hace así por seguridad, sino que se conecta a un servidor.
+
+2. COMPLICACIONES QUE ENFRENTAMOS Y CÓMO LAS SOLUCIONAMOS
+- El menú en Android: Al principio, el menú móvil se transparentaba, la página de fondo seguía haciendo scroll y el botón del carrito se perdía fuera de la pantalla por falta de espacio. Lo solucionamos bloqueando el scroll del fondo con JavaScript, haciendo que el menú ocupe el 100% de la pantalla (100vh) con un fondo sólido y agregando un scroll interno solo para el menú.
+- El fondo animado: Le habíamos puesto un desenfoque (blur) tan fuerte al GIF de la tarjeta RTX que el fondo se veía completamente negro. Lo arreglamos bajando el desenfoque y subiendo el brillo para que se aprecie la imagen sin quitarle legibilidad a los textos.
+- Simulación de pagos: Hacer un carrito es fácil, pero simular el pago con tarjeta y QR fue un reto. Creamos un generador de QR que cambia cada 30 segundos (como las apps bancarias reales) y una validación de tarjeta que rechaza números falsos.
+- Sincronización del inventario: Como no teníamos base de datos, si el admin agregaba un producto, no aparecía en la tienda. Solucionamos esto usando el localStorage del navegador como una base de datos falsa compartida entre todas las páginas.
+
+3. INVESTIGACIÓN Y ADAPTACIÓN DE CÓDIGO
+Este proyecto no se hizo de cero; requirió investigar en internet y adaptar cosas:
+- Búsqueda de herramientas: Investigamos cómo generar códigos QR y encontramos la librería gratuita QRCode.js. Adaptamos su documentación para integrarla en nuestra pasarela de pago.
+- Validación de Tarjeta (Algoritmo de Luhn): Para que el formulario no acepte cualquier número inventado, investigamos cómo validan las tiendas reales. Descubrimos el Algoritmo de Luhn (una fórmula matemática de Visa y Mastercard) y adaptamos esa fórmula a nuestro JavaScript para rechazar tarjetas falsas y aceptar la tarjeta de prueba 4242 4242 4242 4242.
+- Inspiración de diseño visual: Para el estilo visual, investigamos tendencias de interfaces. Copiamos la idea del "Glassmorphism" (paneles de cristal esmerilado usando backdrop-filter en CSS) y sacamos los códigos de color HEX exactos de la tarjeta RTX para aplicarlos a la tienda.
+- Efectos visuales: Buscamos cómo hacer que los elementos floten o brillen. Adaptamos animaciones de @keyframes de CSS y usamos tipografías gratuitas de Google Fonts (Orbitron para un look tecnológico y Outfit para lectura).
+- Adaptabilidad Móvil (Responsive): Investigamos los estándares de diseño para celulares. Descubrimos que los botones deben medir al menos 44px de alto para que el dedo humano no falle al tocar. También investigamos cómo evitar que el teclado del celular haga zoom automático en los inputs (lo solucionamos poniendo el tamaño de fuente a 16px en los formularios).
+
+4. CONCLUSIÓN
+El proyecto pasó de ser un HTML estático a una aplicación web interactiva. Se adaptaron fragmentos de código, se investigaron algoritmos matemáticos, se aplicaron buenas prácticas de accesibilidad para móviles y se implementó una arquitectura basada en localStorage para simular un sistema completo sin necesidad de un servidor, todo envuelto en un diseño inmersivo inspirado en la tecnología.

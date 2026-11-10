@@ -1,0 +1,124 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="TecnoTienda, tienda demostrativa de tecnología">
+  <title>Finalizar pedido | TecnoTienda</title>
+  <link rel="stylesheet" href="css/estilos.css">
+</head>
+<body>
+  <header>
+    <div class="contenedor barra">
+      <a class="logo" href="index.html">Tecno<span>Tienda</span></a>
+      <button class="menu-toggle" id="menu-toggle" aria-label="Abrir menú" aria-expanded="false">☰</button>
+      <nav id="menu-principal">
+        <a href="index.html">Inicio</a>
+        <a href="computadoras.html">Computadoras</a>
+        <a href="laptops.html">Laptops</a>
+        <a href="pc-armados.html">PC armados</a>
+        <a href="gpu.html">GPU</a>
+        <a href="cpu.html">CPU</a>
+        <a href="comentarios.html">Comentarios</a>
+        <a href="registro.html">Registro</a>
+        <a href="contacto.html">Contacto</a>
+        <a href="adm.html">Admin</a>
+        <a href="carrito.html" class="enlace-carrito">🛒 Carrito <span id="contador-carrito">0</span></a>
+      </nav>
+    </div>
+  </header>
+  <main>
+    <section class="contenedor pagina">
+      <p class="etiqueta">PAGO SEGURO</p>
+      <h1>Finalizar pedido</h1>
+      <div id="resumen-pedido" class="panel"><p>Cargando resumen...</p></div>
+      <div class="panel">
+        <h2>Método de pago</h2>
+        <div class="pestanas" role="tablist" aria-label="Método de pago">
+          <button class="boton activa" type="button" role="tab"
+                  aria-selected="true" aria-controls="panel-qr"
+                  data-metodo="QR bancario" data-panel="panel-qr">
+            QR bancario
+          </button>
+          <button class="boton secundario" type="button" role="tab"
+                  aria-selected="false" aria-controls="panel-tarjeta"
+                  data-metodo="Tarjeta de crédito" data-panel="panel-tarjeta">
+            Tarjeta de crédito
+          </button>
+        </div>
+        <div id="panel-qr" role="tabpanel">
+          <div class="qr-pasarela">
+            <div class="qr-head">
+              <span class="qr-brand">Tecno<span>Tienda</span> <em>Pay</em></span>
+              <span class="qr-badge">Pago seguro</span>
+            </div>
+            <div class="qr-amount-box">
+              <span class="qr-label">Monto a pagar</span>
+              <strong id="qr-total" class="qr-amount">—</strong>
+            </div>
+            <div class="qr-scanner">
+              <span class="qr-corner tl"></span>
+              <span class="qr-corner tr"></span>
+              <span class="qr-corner bl"></span>
+              <span class="qr-corner br"></span>
+              <div id="qr-box" class="qr-canvas" aria-label="Código QR de pago"></div>
+              <div id="qr-logo" class="qr-logo" aria-hidden="true">T</div>
+            </div>
+            <div class="qr-progress" aria-hidden="true">
+              <div id="qr-progress-bar" class="qr-progress-bar"></div>
+            </div>
+            <div class="qr-info">
+              <span id="qr-timer" class="qr-timer">Válido por 30 s</span>
+              <button id="qr-refresh" type="button" class="qr-refresh" aria-label="Regenerar QR">↻</button>
+            </div>
+            <p class="qr-instruccion">
+              Abre la app de tu banco y escanea el código. Se renueva automáticamente.
+            </p>
+            <div class="qr-token">
+              <span>Token</span>
+              <code id="qr-token-text">—</code>
+            </div>
+          </div>
+          <button id="qr-verificar" class="boton qr-verificar" type="button">Verificar pago</button>
+          <p id="qr-mensaje" class="mensaje" role="status"></p>
+        </div>
+        <div id="panel-tarjeta" role="tabpanel" hidden>
+          <form id="form-tarjeta" class="formulario" novalidate autocomplete="on">
+            <label>Titular de la tarjeta
+              <input id="tar-nombre" type="text" autocomplete="cc-name"
+                     maxlength="60" required placeholder="Nombre como aparece en la tarjeta">
+            </label>
+            <label>Número de tarjeta
+              <input id="tar-numero" type="text" inputmode="numeric"
+                     autocomplete="cc-number" maxlength="19" required
+                     placeholder="0000 0000 0000 0000">
+            </label>
+            <div class="fila">
+              <label>Vencimiento
+                <input id="tar-vence" type="text" inputmode="numeric"
+                       autocomplete="cc-exp" maxlength="5" required placeholder="MM/AA">
+              </label>
+              <label>CVV
+                <input id="tar-cvv" type="password" inputmode="numeric"
+                       autocomplete="cc-csc" maxlength="4" required placeholder="•••">
+              </label>
+            </div>
+          </form>
+        </div>
+        <p id="metodo-seleccionado">Método seleccionado: QR bancario</p>
+        <button id="confirmar-pedido" class="boton" type="button" hidden>Confirmar pedido</button>
+        <p id="pago-mensaje" class="mensaje" role="status"></p>
+      </div>
+      <div id="recibo-area"></div>
+    </section>
+  </main>
+  <footer>
+    <p>© 2026 TecnoTienda · Proyecto de estudio</p>
+    <p>Precios expresados en USD.</p>
+  </footer>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js"></script>
+  <script src="js/utilidades.js"></script>
+  <script src="js/carrito.js"></script>
+  <script src="js/pago.js"></script>
+</body>
+</html>
